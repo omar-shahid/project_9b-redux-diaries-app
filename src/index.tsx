@@ -1,18 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { store } from './app/store';
-import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { store } from "./app/store";
+import { Provider } from "react-redux";
+import * as serviceWorker from "./serviceWorker";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import startServer from "./app/server";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { orange } from "@material-ui/core/colors";
+import Register from "./pages/Register";
+
+startServer();
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: orange[700],
+    },
+    secondary: {
+      main: orange[900],
+    },
+  },
+});
+
+// const useStyles = makeStyles({
+//   bg: {
+//     backgroundColor: grey[300],
+//     height: "100%",
+//   },
+// });
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

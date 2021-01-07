@@ -1,57 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { Box, Typography, useMediaQuery, useTheme } from "@material-ui/core";
+import { grey } from "@material-ui/core/colors";
+import React from "react";
+import "./App.css";
+// import classes from "*.module.css";
+import NavBar from "./components/NavBar";
+import useStyles from "./styles";
+import { MenuBook } from "@material-ui/icons";
 
 function App() {
+  fetch("/api/reminders")
+    .then((re) => re.json())
+    .then((e) => console.log(e));
+  const theme = useTheme();
+  const smBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
+  const classes = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      <NavBar />
+      <Box
+        display="flex"
+        height="80%"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box maxWidth="70%">
+          <Typography
+            className={classes.headingGrey}
+            variant={smBreakPoint ? "h2" : "h1"}
+            component="h1"
           >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+            <strong color={grey[500]}>Welcome to Diaries App</strong>
+          </Typography>
+          <Typography variant="body1">
+            Register now to write your diary!
+          </Typography>
+        </Box>
+      </Box>
+    </>
   );
 }
 

@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.2.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -12,11 +14,19 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.7",
+    "formik": "^2.2.6",
+    "history": "^5.0.0",
+    "markdown-to-jsx": "^7.1.0",
+    "miragejs": "^0.1.41",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.0",
+    "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "4.0.1",
-    "typescript": "~3.8.2"
+    "sweetalert2": "^10.12.7",
+    "sweetalert2-react-content": "^3.2.2",
+    "typescript": "~3.8.2",
+    "yup": "^0.32.8"
   },
   "scripts": {
     "start": "react-scripts start",
