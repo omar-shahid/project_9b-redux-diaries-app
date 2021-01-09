@@ -22,6 +22,11 @@ const registerSchema = yup.object().shape({
   }),
 });
 
+const loginSchema = yup.object().shape({
+  email: yup.string().required("Email is required").email("Email is not valid"),
+  password: yup.string().required("Password is required"),
+});
+
 function startServer() {
   createServer({
     routes() {
@@ -36,6 +41,7 @@ function startServer() {
             USERS.push(user);
             return {
               token: user.token,
+              name: user.name,
             };
           })
           .catch((e) => {
@@ -47,6 +53,31 @@ function startServer() {
             );
           });
       });
+
+      this.post("/login", (_, req) => {
+        const body = JSON.parse(req.requestBody);
+        return loginSchema
+          .validate(body.values, { abortEarly: false })
+          .then((user) => {
+            const userFound = USERS.find((el) => el.email === user.email);
+            if (!userFound) return new Response(400, {}, ["User not found"]);
+            if (userFound.password !== user.password)
+              return new Response(400, {}, ["Icorrect Password"]);
+            const token = v4();
+            USERS[USERS.indexOf(userFound)].token = token;
+            return { token, name: userFound.name };
+          })
+          .catch((e) => {
+            console.log(e);
+            return new Response(
+              400,
+              {},
+              e.inner.map((el) => el.message)
+            );
+          });
+      });
+
+      this.get("/users", () => USERS);
     },
   });
 }

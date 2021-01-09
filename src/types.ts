@@ -5,8 +5,14 @@ export type RegisterUserForm = {
   confPassword: string;
 };
 
+export type LoginUserForm = {
+  email: string;
+  password: string;
+};
+
 export type AuthResponse = {
   token: string;
+  name: string;
 };
 
 export type AuthErrorResponse = {

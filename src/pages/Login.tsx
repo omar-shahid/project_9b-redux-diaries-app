@@ -5,7 +5,7 @@ import Alert from "@material-ui/lab/Alert";
 
 import { Box, Button, Paper, TextField, Typography } from "@material-ui/core";
 import { Formik } from "formik";
-import { loginAsync } from "../features/userSlice";
+import { loginAction } from "../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
@@ -54,10 +54,10 @@ function Login() {
                   password: "",
                 }}
                 onSubmit={(values) => {
-                  //   dispatch(loginAsync(values)).then((data) => {
-                  //     const payloadData = data.payload as AuthErrorResponse;
-                  //     if (payloadData?.haveErrors) setErrors(payloadData.errors);
-                  //   });
+                  dispatch(loginAction(values)).then((data) => {
+                    const payloadData = data.payload as AuthErrorResponse;
+                    if (payloadData?.haveErrors) setErrors(payloadData.errors);
+                  });
                 }}
               >
                 {({ values, handleSubmit, handleChange }) => (

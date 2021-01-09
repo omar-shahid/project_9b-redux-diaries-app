@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
-import { AuthResponse, RegisterUserForm } from "../types";
+import { AuthResponse, LoginUserForm, RegisterUserForm } from "../types";
 
 type User = {
   token: string;
@@ -26,6 +26,27 @@ export const registerAction = createAsyncThunk(
         const user = {
           token,
           name: values.name,
+          email: values.email,
+        };
+        api.dispatch(login(user));
+      })
+      .catch((e) => ({
+        haveErrors: true,
+        errors: e.response.data as string[],
+      }))
+);
+
+export const loginAction = createAsyncThunk(
+  "user/loginAction",
+  async (values: LoginUserForm, api) =>
+    axios
+      .post<LoginUserForm, AxiosResponse<AuthResponse>>("/api/login", {
+        values,
+      })
+      .then((res) => res.data)
+      .then((resUser) => {
+        const user = {
+          ...resUser,
           email: values.email,
         };
         api.dispatch(login(user));
