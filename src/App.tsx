@@ -2,15 +2,10 @@ import { Box, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import { grey } from "@material-ui/core/colors";
 import React from "react";
 import "./App.css";
-// import classes from "*.module.css";
 import NavBar from "./components/NavBar";
 import useStyles from "./styles";
-import { MenuBook } from "@material-ui/icons";
 
 function App() {
-  fetch("/api/reminders")
-    .then((re) => re.json())
-    .then((e) => console.log(e));
   const theme = useTheme();
   const smBreakPoint = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles();

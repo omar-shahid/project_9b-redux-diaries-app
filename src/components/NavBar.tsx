@@ -21,9 +21,9 @@ export default function NavBar() {
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography variant="h6" className={classes.title}>
-            News
-          </Typography>
+          <Link to="/" className={`${classes.link}  ${classes.title}`}>
+            <Typography variant="h6">News</Typography>
+          </Link>
           <Link to="/login" className={classes.link}>
             <Button color="inherit">Login</Button>
           </Link>
