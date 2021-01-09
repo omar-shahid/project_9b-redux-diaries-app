@@ -10,6 +10,7 @@ import startServer from "./app/server";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 startServer();
 const theme = createMuiTheme({
@@ -23,13 +24,6 @@ const theme = createMuiTheme({
   },
 });
 
-// const useStyles = makeStyles({
-//   bg: {
-//     backgroundColor: grey[300],
-//     height: "100%",
-//   },
-// });
-
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
@@ -38,6 +32,7 @@ ReactDOM.render(
           <Routes>
             <Route path="/" element={<App />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </Provider>
