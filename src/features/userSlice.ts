@@ -14,7 +14,7 @@ const initialState: User = {
   email: "",
 };
 
-export const loginAsync = createAsyncThunk(
+export const registerAction = createAsyncThunk(
   "user/registerAction",
   async (values: RegisterUserForm, api) =>
     axios

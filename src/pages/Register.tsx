@@ -5,7 +5,7 @@ import Alert from "@material-ui/lab/Alert";
 
 import { Box, Button, Paper, TextField, Typography } from "@material-ui/core";
 import { Formik } from "formik";
-import { loginAsync } from "../features/userSlice";
+import { registerAction } from "../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +32,7 @@ function Register() {
         alignItems="center"
         height="90vh"
       >
-        <Box minHeight="50%">
+        <Box minHeight="50%" minWidth="50%">
           <Paper style={{ height: "100%" }} elevation={5}>
             <Box padding={5}>
               {errors?.map((el) => (
@@ -56,9 +56,9 @@ function Register() {
                   confPassword: "",
                 }}
                 onSubmit={(values) => {
-                  dispatch(loginAsync(values)).then((data) => {
+                  dispatch(registerAction(values)).then((data) => {
                     const payloadData = data.payload as AuthErrorResponse;
-                    if (payloadData.haveErrors) setErrors(payloadData.errors);
+                    if (payloadData?.haveErrors) setErrors(payloadData.errors);
                   });
                 }}
               >
