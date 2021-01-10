@@ -37,6 +37,9 @@ export default function NavBar() {
           </Link>
           {!!token.length ? (
             <>
+              <Link to="/dashboard" className={classes.link}>
+                <Button color="inherit">Dashboard</Button>
+              </Link>
               <Button color="inherit" onClick={handleLogout}>
                 Logout
               </Button>
