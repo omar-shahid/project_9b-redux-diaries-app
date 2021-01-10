@@ -42,7 +42,7 @@ function startServer() {
             return {
               token: user.token,
               name: user.name,
-              id: USERS.length - 1,
+              userId: USERS.length - 1,
             };
           })
           .catch((e) => {
@@ -69,7 +69,7 @@ function startServer() {
             return {
               token,
               name: userFound.name,
-              id: USERS.indexOf(userFound),
+              userId: USERS.indexOf(userFound),
             };
           })
           .catch((e) => {
@@ -82,7 +82,7 @@ function startServer() {
           });
       });
 
-      this.get("/notes", (_, req) => {
+      this.post("/notes", (_, req) => {
         const { values } = JSON.parse(req.requestBody);
         if (!values.token || values.token !== USERS[values.userId].token)
           return new Response(400, {}, ["invalid token"]);

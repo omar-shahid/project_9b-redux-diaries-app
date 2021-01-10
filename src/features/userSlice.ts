@@ -6,14 +6,14 @@ type User = {
   token: string;
   name: string;
   email: string;
-  id: number;
+  userId: number;
 };
 
 const initialState: User = {
   token: "",
   name: "",
   email: "",
-  id: NaN,
+  userId: NaN,
 };
 
 export const registerAction = createAsyncThunk(
@@ -24,19 +24,22 @@ export const registerAction = createAsyncThunk(
         values,
       })
       .then((res) => res.data)
-      .then(({ token, id }) => {
+      .then(({ token, userId }) => {
         const user = {
           token,
           name: values.name,
           email: values.email,
-          id,
+          userId,
         };
         api.dispatch(login(user));
       })
-      .catch((e) => ({
-        haveErrors: true,
-        errors: e.response.data as string[],
-      }))
+      .catch((e) => {
+        console.log("Working");
+        return {
+          haveErrors: true,
+          errors: e.response.data as string[],
+        };
+      })
 );
 
 export const loginAction = createAsyncThunk(

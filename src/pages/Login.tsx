@@ -8,11 +8,12 @@ import { Formik } from "formik";
 import { loginAction } from "../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { AuthErrorResponse } from "../types";
 
 function Login() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const dispatch: AppDispatch = useDispatch();
   const [errors, setErrors] = useState<string[]>([]);
@@ -23,6 +24,12 @@ function Login() {
   useEffect(() => {
     if (!!token.length) navigate("/dashboard");
   }, [token.length, navigate]);
+
+  useEffect(() => {
+    const invalidToken = searchParams.get("invalidToken");
+    if (invalidToken)
+      setErrors((p) => p.concat("Your session has been expired."));
+  }, [searchParams]);
   return (
     <>
       <NavBar />

@@ -13,10 +13,15 @@ export type LoginUserForm = {
 export type AuthResponse = {
   token: string;
   name: string;
-  id: number;
+  userId: number;
 };
 
 export type AuthErrorResponse = {
   errors: string[];
   haveErrors: boolean;
+};
+
+export type AuthAccessCredentials = {
+  token: string;
+  userId: number;
 };
