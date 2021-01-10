@@ -12,6 +12,7 @@ import { orange } from "@material-ui/core/colors";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import CreateNote from "./pages/CreateNote";
 
 startServer();
 const theme = createMuiTheme({
@@ -35,6 +36,7 @@ ReactDOM.render(
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/notes/create" element={<CreateNote />} />
           </Routes>
         </BrowserRouter>
       </Provider>

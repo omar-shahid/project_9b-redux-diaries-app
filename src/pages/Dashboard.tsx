@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import axios from "axios";
 import NavBar from "../components/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
@@ -7,7 +6,7 @@ import { fetchNotes } from "../features/notesSlice";
 import { logout } from "../features/userSlice";
 import { AuthErrorResponse } from "../types";
 import { Link, useNavigate } from "react-router-dom";
-import { Box, Button, Container } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 import useStyles from "../styles";
 
 function Dashboard() {
@@ -28,7 +27,8 @@ function Dashboard() {
         }
       }
     );
-  }, []);
+  }, [dispatch, navigate, user.token, user.userId]);
+
   return (
     <>
       <NavBar />
