@@ -6,12 +6,14 @@ type User = {
   token: string;
   name: string;
   email: string;
+  id: number;
 };
 
 const initialState: User = {
   token: "",
   name: "",
   email: "",
+  id: NaN,
 };
 
 export const registerAction = createAsyncThunk(
@@ -22,11 +24,12 @@ export const registerAction = createAsyncThunk(
         values,
       })
       .then((res) => res.data)
-      .then(({ token }) => {
+      .then(({ token, id }) => {
         const user = {
           token,
           name: values.name,
           email: values.email,
+          id,
         };
         api.dispatch(login(user));
       })

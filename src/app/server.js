@@ -42,6 +42,7 @@ function startServer() {
             return {
               token: user.token,
               name: user.name,
+              id: USERS.length - 1,
             };
           })
           .catch((e) => {
@@ -65,7 +66,11 @@ function startServer() {
               return new Response(400, {}, ["Icorrect Password"]);
             const token = v4();
             USERS[USERS.indexOf(userFound)].token = token;
-            return { token, name: userFound.name };
+            return {
+              token,
+              name: userFound.name,
+              id: USERS.indexOf(userFound),
+            };
           })
           .catch((e) => {
             console.log(e);
@@ -75,6 +80,13 @@ function startServer() {
               e.inner.map((el) => el.message)
             );
           });
+      });
+
+      this.get("/notes", (_, req) => {
+        const { values } = JSON.parse(req.requestBody);
+        if (!values.token || values.token !== USERS[values.userId].token)
+          return new Response(400, {}, ["invalid token"]);
+        return NOTES.filter((el) => el.userId === values.userId);
       });
 
       this.get("/users", () => USERS);

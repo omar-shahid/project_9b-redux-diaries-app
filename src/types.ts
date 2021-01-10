@@ -13,6 +13,7 @@ export type LoginUserForm = {
 export type AuthResponse = {
   token: string;
   name: string;
+  id: number;
 };
 
 export type AuthErrorResponse = {
