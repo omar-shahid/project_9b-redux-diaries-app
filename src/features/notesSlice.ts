@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { AuthAccessCredentials, AuthErrorResponse } from "../types";
+// import { logout } from "./userSlice";
 
 type Note = {
   name: string;
@@ -12,13 +14,22 @@ type NotesState = Note[];
 
 const initialState: NotesState = [];
 
-export const fetchNotes = createAsyncThunk("notes/fetchNotes", (_, api) =>
-  axios
-    .get("/api/notes")
-    .then((res) => res.data)
-    .then((notes) => {
-      api.dispatch(addAllNotes(notes));
-    })
+export const fetchNotes = createAsyncThunk(
+  "notes/fetchNotes",
+  (values: AuthAccessCredentials, api) =>
+    axios
+      .post("/api/notes", { values })
+      .then((res) => res.data)
+      .then((notes) => {
+        api.dispatch(addAllNotes(notes));
+      })
+      .catch((e) => {
+        console.log(e);
+        return {
+          haveErrors: true,
+          errors: e?.response?.data as string[],
+        } as AuthErrorResponse;
+      })
 );
 
 export const notesSlice = createSlice({

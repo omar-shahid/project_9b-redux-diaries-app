@@ -11,7 +11,6 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import axios from "axios";
 import Dashboard from "./pages/Dashboard";
 
 startServer();
@@ -25,8 +24,6 @@ const theme = createMuiTheme({
     },
   },
 });
-
-axios.get("/api/users").then(({ data }) => console.log(data));
 
 ReactDOM.render(
   <React.StrictMode>
