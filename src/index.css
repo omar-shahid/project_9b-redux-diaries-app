@@ -16,3 +16,17 @@ code {
 .height > * {
   min-height: 500px;
 }
+
+.text-xl {
+  font-size: 18px;
+}
+.note {
+  overflow: auto;
+}
+.note img {
+  width: 100%;
+  height: auto;
+}
+.note * {
+  text-align: left;
+}

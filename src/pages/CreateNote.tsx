@@ -8,13 +8,37 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/theme/duotone-light.css";
 import { Link } from "react-router-dom";
 import useStyles from "../styles";
+import { addNote, createNote } from "../features/notesSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../app/store";
+import CheckForToken from "../components/checkForToken";
+// @ts-ignore
+import swal from "@sweetalert/with-react";
 
 function CreateNote() {
-  const classes = useStyles();
   const [value, setValue] = useState(0);
   const [content, setContent] = useState("#Hello");
+  const user = useSelector((state: RootState) => state.user);
+  const dispatch: AppDispatch = useDispatch();
+  const setRedirect = CheckForToken();
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) =>
     setValue(newValue);
+
+  const handleSave = () =>
+    dispatch(
+      createNote({ token: user.token, userId: user.userId, content })
+    ).then((data) =>
+      setRedirect([
+        data,
+        () =>
+          swal({
+            title: "Good job!",
+            text: "You clicked the button!",
+            icon: "success",
+            button: "Aww yiss!",
+          }),
+      ])
+    );
   return (
     <>
       <NavBar />
@@ -26,11 +50,13 @@ function CreateNote() {
           width="100%"
           marginY="14px"
         >
-          <Link to="/notes/create" className={classes.link}>
-            <Button variant="contained" color="primary">
-              Save
-            </Button>
-          </Link>
+          <Button
+            onClick={() => handleSave()}
+            variant="contained"
+            color="primary"
+          >
+            Save
+          </Button>
         </Box>
         <AppBar position="static">
           <Tabs
@@ -50,7 +76,7 @@ function CreateNote() {
               theme: "duotone-light",
               lineNumbers: true,
             }}
-            className="height"
+            className="height text-xl"
             onBeforeChange={(editor, data, value) => {
               setContent(value);
             }}

@@ -4,6 +4,21 @@ import { v4 } from "uuid";
 
 const USERS = [];
 const NOTES = [];
+/**
+ * type Notes = {
+ *  content: string
+ *  createdAt: date
+ *  userId: number
+ * }
+ */
+
+/**
+ * type User = {
+ *   name: string
+ *   email: string
+ *   password: string
+ * }
+ */
 
 const registerSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -90,6 +105,19 @@ function startServer() {
       });
 
       this.get("/users", () => USERS);
+      this.post("/notes/create", (_, req) => {
+        const { values } = JSON.parse(req.requestBody);
+
+        if (!values.token || values.token !== USERS[values.userId].token)
+          return new Response(400, {}, ["invalid token"]);
+        const newNote = {
+          content: values.content,
+          createdAt: new Date(),
+          userId: values.userId,
+        };
+        NOTES.push(newNote);
+        return newNote;
+      });
     },
   });
 }

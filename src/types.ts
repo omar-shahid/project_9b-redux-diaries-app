@@ -25,3 +25,5 @@ export type AuthAccessCredentials = {
   token: string;
   userId: number;
 };
+
+export type CreateNoteRequest = AuthAccessCredentials & { content: string };

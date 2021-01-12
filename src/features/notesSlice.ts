@@ -1,13 +1,17 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { AuthAccessCredentials, AuthErrorResponse } from "../types";
+import axios, { AxiosResponse } from "axios";
+import {
+  AuthAccessCredentials,
+  AuthErrorResponse,
+  CreateNoteRequest,
+} from "../types";
 // import { logout } from "./userSlice";
 
 type Note = {
   name: string;
   createdAt: string;
   userId: number;
-  note: string;
+  content: string;
 };
 
 type NotesState = Note[];
@@ -32,6 +36,21 @@ export const fetchNotes = createAsyncThunk(
       })
 );
 
+export const createNote = createAsyncThunk(
+  "notes/add",
+  (values: CreateNoteRequest, api) =>
+    axios
+      .post<CreateNoteRequest, AxiosResponse<Note>>("/api/notes/create", {
+        values,
+      })
+      .then((res) => res.data)
+      .then((note) => api.dispatch(addNote(note)))
+      .catch((e) => ({
+        haveErrors: true,
+        errors: e?.response?.data as string[],
+      }))
+);
+
 export const notesSlice = createSlice({
   name: "notes",
   initialState,
@@ -45,6 +64,7 @@ export const notesSlice = createSlice({
     editNote: (state, action: PayloadAction<{ id: number; note: Note }>) => {
       state[action.payload.id] = action.payload.note;
     },
+    emptyNotes: () => initialState,
   },
 });
 
@@ -53,6 +73,7 @@ export const {
   addNote,
   deleteNote,
   editNote,
+  emptyNotes,
 } = notesSlice.actions;
 
 export default notesSlice.reducer;
