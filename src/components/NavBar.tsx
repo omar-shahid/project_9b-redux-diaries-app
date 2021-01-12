@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useStyles from "../styles";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import { logout } from "../features/userSlice";
+import { UserAsyncThunks, logout } from "../features/userSlice";
 
 export default function NavBar() {
   const dispatch: AppDispatch = useDispatch();
@@ -16,8 +16,9 @@ export default function NavBar() {
   const token = useSelector((state: RootState) => state.user.token);
 
   const handleLogout = () => {
-    dispatch(logout());
-    navigate("/login");
+    dispatch(UserAsyncThunks.logoutAction()).then(() => {
+      navigate("/login");
+    });
   };
 
   return (
