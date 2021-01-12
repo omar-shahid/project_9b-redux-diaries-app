@@ -6,9 +6,7 @@ import { Controlled as CodeMirror2 } from "react-codemirror2";
 import "codemirror/mode/markdown/markdown";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/duotone-light.css";
-import { Link } from "react-router-dom";
-import useStyles from "../styles";
-import { addNote, createNote } from "../features/notesSlice";
+import { createNote } from "../features/notesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import CheckForToken from "../components/checkForToken";
@@ -80,7 +78,7 @@ function CreateNote() {
             onBeforeChange={(editor, data, value) => {
               setContent(value);
             }}
-            onChange={(editor, data, value) => {}}
+            onChange={() => {}}
           />
         </TabPanel>
         <TabPanel value={value} index={1}>

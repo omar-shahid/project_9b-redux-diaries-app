@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import NavBar from "../components/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { fetchNotes } from "../features/notesSlice";
-import { logout } from "../features/userSlice";
-import { AuthErrorResponse } from "../types";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -13,7 +11,6 @@ import {
   CardActions,
   CardContent,
   Grid,
-  Modal,
   Typography,
 } from "@material-ui/core";
 import useStyles from "../styles";

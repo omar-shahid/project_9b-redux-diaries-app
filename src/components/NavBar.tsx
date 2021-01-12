@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useStyles from "../styles";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import { UserAsyncThunks, logout } from "../features/userSlice";
+import { UserAsyncThunks } from "../features/userSlice";
 
 export default function NavBar() {
   const dispatch: AppDispatch = useDispatch();
