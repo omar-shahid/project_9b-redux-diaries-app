@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosResponse } from "axios";
 import { AuthResponse, LoginUserForm, RegisterUserForm } from "../types";
+import { emptyNotes } from "./notesSlice";
 
 type User = {
   token: string;
@@ -42,6 +43,11 @@ export const registerAction = createAsyncThunk(
       })
 );
 
+const logoutAction = createAsyncThunk("user/logoutAction", (_, api) => {
+  api.dispatch(emptyNotes());
+  api.dispatch(logout());
+});
+
 export const loginAction = createAsyncThunk(
   "user/loginAction",
   async (values: LoginUserForm, api) =>
@@ -73,5 +79,9 @@ export const userSlice = createSlice({
 });
 
 export const { login, logout } = userSlice.actions;
+
+export const UserAsyncThunks = {
+  logoutAction,
+};
 
 export default userSlice.reducer;
