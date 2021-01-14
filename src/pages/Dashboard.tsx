@@ -55,7 +55,7 @@ function Dashboard() {
           <Grid item xs={12}>
             <Grid container justify="flex-start" spacing={7}>
               {notes.map((note, ind) => (
-                <Box padding={2} minWidth="25%">
+                <Box key={note.createdAt} padding={2} minWidth="25%">
                   <Card>
                     <CardContent>
                       <Typography color="textSecondary" gutterBottom>
