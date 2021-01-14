@@ -1,3 +1,5 @@
+import { Note } from "./features/notesSlice";
+
 export type RegisterUserForm = {
   name: string;
   email: string;
@@ -27,3 +29,6 @@ export type AuthAccessCredentials = {
 };
 
 export type CreateNoteRequest = AuthAccessCredentials & { content: string };
+export type EditNoteRequest = AuthAccessCredentials & {
+  note: Note;
+};

@@ -6,13 +6,14 @@ import { store } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import startServer from "./app/server";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import CreateNote from "./pages/CreateNote";
+import startServer from "./app/server";
+import EditNote from "./pages/EditNote";
 
 startServer();
 const theme = createMuiTheme({
@@ -37,6 +38,7 @@ ReactDOM.render(
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/notes/create" element={<CreateNote />} />
+            <Route path="/notes/edit" element={<EditNote />} />
           </Routes>
         </BrowserRouter>
       </Provider>

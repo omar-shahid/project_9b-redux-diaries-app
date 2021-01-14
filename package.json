@@ -7,6 +7,7 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@reduxjs/toolkit": "^1.2.5",
+    "@sweetalert/with-react": "^0.1.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -28,6 +29,7 @@
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "4.0.1",
     "react-syntax-highlighter": "^15.4.3",
+    "sweetalert": "^2.1.2",
     "sweetalert2": "^10.12.7",
     "sweetalert2-react-content": "^3.2.2",
     "typescript": "~3.8.2",
@@ -57,5 +59,8 @@
   },
   "devDependencies": {
     "@types/react-syntax-highlighter": "^13.5.0"
+  },
+  "browser": {
+    "http": false
   }
 }

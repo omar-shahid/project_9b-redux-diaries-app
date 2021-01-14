@@ -4,17 +4,19 @@ import {
   AuthAccessCredentials,
   AuthErrorResponse,
   CreateNoteRequest,
+  EditNoteRequest,
 } from "../types";
 // import { logout } from "./userSlice";
 
-type Note = {
-  name: string;
+export type Note = {
+  // name: string;
   createdAt: string;
   userId: number;
   content: string;
+  id: string;
 };
 
-type NotesState = Note[];
+export type NotesState = Note[];
 
 const initialState: NotesState = [];
 
@@ -51,6 +53,28 @@ export const createNote = createAsyncThunk(
       }))
 );
 
+export const editNoteAction = createAsyncThunk(
+  "notes/editAction",
+  (values: EditNoteRequest, api) =>
+    axios
+      .post<EditNoteRequest, AxiosResponse<Note>>("/api/notes/edit", { values })
+      .then((res) => {
+        console.log("WOrking here ", res);
+        return res.data;
+      })
+      .then((editedNote) => {
+        console.log("Server response: ", editNote);
+        api.dispatch(editNote({ note: editedNote }));
+      })
+      .catch((e) => {
+        console.log(e);
+        return {
+          haveErrors: true,
+          errors: e?.response?.data as string[],
+        };
+      })
+);
+
 export const notesSlice = createSlice({
   name: "notes",
   initialState,
@@ -61,8 +85,10 @@ export const notesSlice = createSlice({
     addNote: (state, action: PayloadAction<Note>) => {
       state.push(action.payload);
     },
-    editNote: (state, action: PayloadAction<{ id: number; note: Note }>) => {
-      state[action.payload.id] = action.payload.note;
+    editNote: (state, action: PayloadAction<{ note: Note }>) => {
+      const noteFound = state.find((el) => el.id === action.payload.note.id);
+      if (!noteFound) return;
+      state[state.indexOf(noteFound)] = action.payload.note;
     },
     emptyNotes: () => initialState,
   },
