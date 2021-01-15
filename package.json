@@ -58,6 +58,7 @@
     ]
   },
   "devDependencies": {
+    "@types/codemirror": "^0.0.106",
     "@types/react-syntax-highlighter": "^13.5.0"
   },
   "browser": {

@@ -4,18 +4,20 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest 
     name: Deploying to surge
     steps:
       - uses: actions/checkout@v2
       - name: Install Node.js
         uses: actions/setup-node@v2-beta
         with:
-          node-version: 12
+          node-version: 15
+      - name: Installing yarn
+        run: npm install yarn
       - name: Installing dependencies
-        run: npm install
+        run: yarn
       - name: Builiding Project
-        run: npm run build
+        run:  yarn build
       - name: Install Surge
         run: npm install -g surge
       - name: Run surge

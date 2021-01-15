@@ -6,7 +6,7 @@ import { Controlled as CodeMirror2 } from "react-codemirror2";
 import "codemirror/mode/markdown/markdown";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/duotone-light.css";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Note, editNoteAction } from "../features/notesSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
