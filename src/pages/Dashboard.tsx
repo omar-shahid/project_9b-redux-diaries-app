@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import NavBar from "../components/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
-import { fetchNotes } from "../features/notesSlice";
+import { fetchNotes, noteDeleteAction, Note } from "../features/notesSlice";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -34,6 +34,12 @@ function Dashboard() {
       fetchNotes({ token: user.token, userId: user.userId })
     ).then((data) => setRedirect([data, () => {}]));
   }, [dispatch, navigate, setRedirect, user.token, user.userId]);
+
+  const handleDelete = (note: Note) => {
+    return dispatch(
+      noteDeleteAction({ token: user.token, userId: note.userId, note })
+    );
+  };
 
   return (
     <>
@@ -91,7 +97,7 @@ function Dashboard() {
                       </Link>
 
                       <Button
-                        // onClick={() }
+                        onClick={() => handleDelete(note)}
                         size="small"
                         color="secondary"
                         variant="outlined"

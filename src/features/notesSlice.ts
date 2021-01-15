@@ -75,13 +75,33 @@ export const editNoteAction = createAsyncThunk(
       })
 );
 
+export const noteDeleteAction = createAsyncThunk(
+  "notes/deleteAction",
+  (values: EditNoteRequest, api) =>
+    axios
+      .post("/api/notes/delete", { values })
+      .then((res) => res.data)
+      .then((bool) => {
+        bool
+          ? api.dispatch(deleteNote(values.note.id))
+          : console.log("Not working");
+      })
+      .catch((e) => {
+        console.log(e);
+        return {
+          haveErrors: true,
+          errors: e?.response?.data as string[],
+        };
+      })
+);
+
 export const notesSlice = createSlice({
   name: "notes",
   initialState,
   reducers: {
     addAllNotes: (_, action: PayloadAction<NotesState>) => action.payload,
-    deleteNote: (state, action: PayloadAction<number>) =>
-      state.filter((_, ind) => ind !== action.payload),
+    deleteNote: (state, action: PayloadAction<string>) =>
+      state.filter((el) => el.id !== action.payload),
     addNote: (state, action: PayloadAction<Note>) => {
       state.push(action.payload);
     },

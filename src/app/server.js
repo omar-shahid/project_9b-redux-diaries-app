@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { v4 } from "uuid";
 
 const USERS = [];
-const NOTES = [];
+let NOTES = [];
 /**
  * type Notes = {
  *  content: string
@@ -130,6 +130,18 @@ function startServer() {
         if (!notesFound) return new Response(404, {}, ["note not found"]);
         NOTES[NOTES.indexOf(notesFound)] = values.note;
         return NOTES[NOTES.indexOf(notesFound)];
+      });
+
+      this.post("/notes/delete", (_, req) => {
+        const { values } = JSON.parse(req.requestBody);
+
+        if (!values.token || values.token !== USERS[values.userId].token)
+          return new Response(400, {}, ["invalid token"]);
+
+        const notesFound = NOTES.find((el) => el.id === values.note.id);
+        if (!notesFound) return new Response(404, {}, ["note not found"]);
+        NOTES = NOTES.filter((el) => el.id !== values.note.id);
+        return true;
       });
     },
   });
