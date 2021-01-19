@@ -9,7 +9,7 @@ import { registerAction } from "../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { useNavigate } from "react-router-dom";
-import { AuthErrorResponse } from "../types";
+import { AuthErrorResponse, RegisterUserForm } from "../types";
 
 function Register() {
   const navigate = useNavigate();
@@ -56,7 +56,17 @@ function Register() {
                   confPassword: "",
                 }}
                 onSubmit={(values) => {
-                  dispatch(registerAction(values)).then((data) => {
+                  const trimmedValues: Record<string, string> = {};
+                  Object.keys(values).forEach(
+                    (el) =>
+                      (trimmedValues[el] = (values as {
+                        [key: string]: string;
+                      })[el].trim())
+                  );
+                  console.log(trimmedValues);
+                  dispatch(
+                    registerAction(trimmedValues as RegisterUserForm)
+                  ).then((data) => {
                     const payloadData = data.payload as AuthErrorResponse;
                     if (payloadData?.haveErrors) setErrors(payloadData.errors);
                   });

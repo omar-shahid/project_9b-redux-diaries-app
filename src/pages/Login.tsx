@@ -9,7 +9,7 @@ import { loginAction } from "../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../app/store";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { AuthErrorResponse } from "../types";
+import { AuthErrorResponse, LoginUserForm } from "../types";
 
 function Login() {
   const navigate = useNavigate();
@@ -61,10 +61,21 @@ function Login() {
                   password: "",
                 }}
                 onSubmit={(values) => {
-                  dispatch(loginAction(values)).then((data) => {
-                    const payloadData = data.payload as AuthErrorResponse;
-                    if (payloadData?.haveErrors) setErrors(payloadData.errors);
-                  });
+                  const trimmedValues: Record<string, string> = {};
+                  Object.keys(values).forEach(
+                    (el) =>
+                      (trimmedValues[el] = (values as {
+                        [key: string]: string;
+                      })[el].trim())
+                  );
+                  console.log(trimmedValues);
+                  dispatch(loginAction(trimmedValues as LoginUserForm)).then(
+                    (data) => {
+                      const payloadData = data.payload as AuthErrorResponse;
+                      if (payloadData?.haveErrors)
+                        setErrors(payloadData.errors);
+                    }
+                  );
                 }}
               >
                 {({ values, handleSubmit, handleChange }) => (
