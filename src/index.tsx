@@ -15,6 +15,7 @@ import CreateNote from "./pages/CreateNote";
 import startServer from "./app/server";
 import EditNote from "./pages/EditNote";
 
+// Comment!
 startServer();
 const theme = createMuiTheme({
   palette: {
